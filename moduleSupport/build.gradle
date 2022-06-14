@@ -1,0 +1,80 @@
+def config = rootProject.ext.android
+def androidBaseLib = rootProject.ext.androidBaseLib
+
+apply plugin: 'com.android.library'
+apply plugin: 'org.jetbrains.kotlin.android'
+apply plugin: 'kotlin-kapt'
+
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
+android {
+    compileSdk config.compileSdkVersion
+
+    defaultConfig {
+        config.minSdkVersion
+        config.targetSdkVersion
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+dependencies {
+    implementation androidBaseLib.ktx
+    implementation androidBaseLib.appcompat
+    implementation androidBaseLib.material
+    testImplementation androidBaseLib.junit
+    androidTestImplementation androidBaseLib.extJunit
+    androidTestImplementation androidBaseLib.espresso
+    // https://github.com/orhanobut/logger
+    api "com.orhanobut:logger:$androidBaseLib.version_logger"
+    //https://github.com/ReactiveX/RxJava
+    api "io.reactivex.rxjava3:rxjava:$androidBaseLib.version_rxjava"
+    //https://github.com/ReactiveX/RxAndroid
+    api "io.reactivex.rxjava3:rxandroid:$androidBaseLib.version_android"
+    api "com.squareup.retrofit2:retrofit:$androidBaseLib.version_retrofit"
+    api "com.squareup.retrofit2:adapter-rxjava3:$androidBaseLib.version_adapter_rxjava"
+    api "com.squareup.retrofit2:converter-gson:$androidBaseLib.version_converter_gson"
+    api("com.squareup.okhttp3:okhttp:$androidBaseLib.version_okhttp")
+    api("com.squareup.okhttp3:logging-interceptor:$androidBaseLib.version_logging_interceptor")
+    // https://github.com/getActivity/XXPermissions
+    api "com.github.getActivity:XXPermissions:$androidBaseLib.version_xxPermissions"
+    //api "com.pgyer:analytics:$androidBaseLib.version_pgyer"
+    // 吐司框架：https://github.com/getActivity/ToastUtils
+    api "com.github.getActivity:ToastUtils:$androidBaseLib.version_toastUtils"
+    api "com.alibaba:arouter-api:$androidBaseLib.version_arouter_api"
+    kapt "com.alibaba:arouter-compiler:$androidBaseLib.version_arouter_compiler"
+    // 图片加载Glide
+    api "com.github.bumptech.glide:glide:$androidBaseLib.version_glide"
+    annotationProcessor "com.github.bumptech.glide:compiler:$androidBaseLib.version_glide"
+    //Room 数据库
+    api "androidx.room:room-runtime:$androidBaseLib.version_room"
+    kapt "androidx.room:room-compiler:$androidBaseLib.version_room"
+    api "androidx.room:room-ktx:$androidBaseLib.version_room"
+
+    // Kotlin nav
+    api("androidx.navigation:navigation-fragment-ktx:$androidBaseLib.version_nav")
+    api("androidx.navigation:navigation-ui-ktx:$androidBaseLib.version_nav")
+    // 65535 问题
+    api "com.android.support:multidex:$androidBaseLib.version_multidex"
+    //kotlin 协程 （协同线程操作）
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-core:$androidBaseLib.version_kotlinx_coroutines")
+    api("org.jetbrains.kotlinx:kotlinx-coroutines-android:$androidBaseLib.version_kotlinx_coroutines")
+    // junit
+    api "junit:junit:$androidBaseLib.version_junit"
+}
