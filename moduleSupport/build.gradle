@@ -4,6 +4,8 @@ def androidBaseLib = rootProject.ext.androidBaseLib
 apply plugin: 'com.android.library'
 apply plugin: 'org.jetbrains.kotlin.android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
 kapt {
     arguments {
         arg("AROUTER_MODULE_NAME", project.getName())
@@ -82,3 +84,5 @@ dependencies {
     // junit
     api "junit:junit:$androidBaseLib.version_junit"
 }
+
+apply plugin: "com.vanniktech.maven.publish"
