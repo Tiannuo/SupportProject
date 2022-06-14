@@ -4,7 +4,6 @@ def androidBaseLib = rootProject.ext.androidBaseLib
 apply plugin: 'com.android.library'
 apply plugin: 'org.jetbrains.kotlin.android'
 apply plugin: 'kotlin-kapt'
-
 kapt {
     arguments {
         arg("AROUTER_MODULE_NAME", project.getName())
@@ -34,6 +33,11 @@ android {
         jvmTarget = '1.8'
     }
 }
+
+buildscript {
+
+}
+
 dependencies {
     implementation androidBaseLib.ktx
     implementation androidBaseLib.appcompat
